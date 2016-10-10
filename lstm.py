@@ -105,7 +105,7 @@ def lstm_model(num_units, rnn_layers, dense_layers=None, learning_rate=0.1, opti
     def _lstm_model(X, y):
         stacked_lstm = tf.nn.rnn_cell.MultiRNNCell(lstm_cells(rnn_layers), state_is_tuple=True)
         x_ = tf.unpack(X, axis=1, num=num_units)
-        output, layers = tf.nn.rnn(stacked_lstm, x_, dtype=dtypes.float32)
+        output, layers = tf.nn.rnn(stacked_lstm, x_, dtype=dtypes.float64)
         output = dnn_layers(output[-1], dense_layers)
         prediction, loss = learn.models.linear_regression(output, y)
         train_op = tf.contrib.layers.optimize_loss(
